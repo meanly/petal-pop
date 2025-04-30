@@ -64,8 +64,8 @@
     <Compile Include="Assets\scripts\BuildingButton.cs" />
     <Compile Include="Assets\scripts\BuildingButtonHandler.cs" />
     <Compile Include="Assets\scripts\UpgradeButton.cs" />
+    <Compile Include="Assets\scripts\Flowers.cs" />
     <Compile Include="Assets\scripts\BuildingUpgrade.cs" />
-    <Compile Include="Assets\scripts\Cookie.cs" />
     <Compile Include="Assets\scripts\GameStats.cs" />
   </ItemGroup>
   <ItemGroup>

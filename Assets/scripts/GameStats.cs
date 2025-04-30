@@ -5,92 +5,99 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class GameStats : MonoBehaviour {
+public class GameStats : MonoBehaviour
+{
 
-	public Text cookiesText;
-	public Text cookiesPerSecondText;
-	public Text cookiesPerClickTextTest;
+    public Text flowersText;
+    public Text flowersPerSecondText;
+    public Text flowersPerClickTextTest;
 
-	private System.Threading.Timer timer;
+    private System.Threading.Timer timer;
 
-	public decimal cookies = 0.0m;
-	public decimal handmadeCookies = 0.0m;
+    public decimal flowers = 0.0m;
+    public decimal handmadeFlowers = 0.0m;
 
-	public decimal cookiesPerClick = 1m;
-	public decimal cookiesPerClickMultiplier = 1.0m;
-	public decimal cookiesPerClickAddOn = 0.0m;
-	public decimal cookiesPerClickTotal;
+    public decimal flowersPerClick = 1m;
+    public decimal flowersPerClickMultiplier = 1.0m;
+    public decimal flowersPerClickAddOn = 0.0m;
+    public decimal flowersPerClickTotal;
 
-	public decimal cookiesPerSecond = 0.0m;
+    public decimal flowersPerSecond = 0.0m;
 
-	public decimal cookiesPerSecondMultiplier = 1.0m;
-	public decimal cookiesPerSecondTotal = 0.0m;
+    public decimal flowersPerSecondMultiplier = 1.0m;
+    public decimal flowersPerSecondTotal = 0.0m;
 
-	public string handmadeCookiesString;
-	public string cookiesPerClickTotalString;
+    public string handmadeFlowersString;
+    public string flowersPerClickTotalString;
 
-	int cookieAddPeriod = 25; // time between cookies updates in milliseconds
+    int flowerAddPeriod = 25; // time between flowers updates in milliseconds
 
-	Dictionary<int, string> zeroCountsToWords = new Dictionary<int, string>();
+    Dictionary<int, string> zeroCountsToWords = new Dictionary<int, string>();
 
-	public bool shortenNumbers = true;
+    public bool shortenNumbers = true;
 
-	void Start () {
-		timer = new System.Threading.Timer (UpdateProperty);
-		timer.Change (cookieAddPeriod, cookieAddPeriod);
+    void Start()
+    {
+        timer = new System.Threading.Timer(UpdateProperty);
+        timer.Change(flowerAddPeriod, flowerAddPeriod);
 
-		zeroCountsToWords.Add(33, "decillion");
-		zeroCountsToWords.Add(3, "thousand");
-		zeroCountsToWords.Add(36, "undecillion");
-		zeroCountsToWords.Add(6, "million");
-		zeroCountsToWords.Add(39, "duodecillion");
-		zeroCountsToWords.Add(9, "billion");
-		zeroCountsToWords.Add(42, "tredecillion");
-		zeroCountsToWords.Add(12, "trillion");
-		zeroCountsToWords.Add(15, "quadrillion");
-		zeroCountsToWords.Add(18, "quintillion");
-		zeroCountsToWords.Add(21, "sextillion");
-		zeroCountsToWords.Add(24, "septillion");
-		zeroCountsToWords.Add(27, "octillion");
-		zeroCountsToWords.Add(30, "nonillion");
+        zeroCountsToWords.Add(33, "decillion");
+        zeroCountsToWords.Add(3, "thousand");
+        zeroCountsToWords.Add(36, "undecillion");
+        zeroCountsToWords.Add(6, "million");
+        zeroCountsToWords.Add(39, "duodecillion");
+        zeroCountsToWords.Add(9, "billion");
+        zeroCountsToWords.Add(42, "tredecillion");
+        zeroCountsToWords.Add(12, "trillion");
+        zeroCountsToWords.Add(15, "quadrillion");
+        zeroCountsToWords.Add(18, "quintillion");
+        zeroCountsToWords.Add(21, "sextillion");
+        zeroCountsToWords.Add(24, "septillion");
+        zeroCountsToWords.Add(27, "octillion");
+        zeroCountsToWords.Add(30, "nonillion");
 
-//		cookies = 123876544m; // testing
-	}
+        //		flowers = 123876544m; // testing
+    }
 
-	private void UpdateProperty(object state) {
-		lock(this) {
-			cookies += cookiesPerSecondTotal / (1000.0m / cookieAddPeriod);
-		}
-	}
+    private void UpdateProperty(object state)
+    {
+        lock (this)
+        {
+            flowers += flowersPerSecondTotal / (1000.0m / flowerAddPeriod);
+        }
+    }
 
-	void Update () {
-		cookiesPerClickTotal = cookiesPerClick * cookiesPerClickMultiplier + cookiesPerClickAddOn;
-		cookiesPerSecondTotal = cookiesPerSecond * cookiesPerSecondMultiplier;
-		string formattedCookieCount = formatNumber (cookies, (shortenNumbers ? 3 : 0));
-		cookiesText.text = formattedCookieCount + " cookies";
-		cookiesPerSecondText.text = "Per second: " + cookiesPerSecondTotal.ToString(cookiesPerSecondTotal == (int)cookiesPerSecondTotal ? "N0" : "N1");
+    void Update()
+    {
+        flowersPerClickTotal = flowersPerClick * flowersPerClickMultiplier + flowersPerClickAddOn;
+        flowersPerSecondTotal = flowersPerSecond * flowersPerSecondMultiplier;
+        string formattedFlowerCount = formatNumber(flowers, (shortenNumbers ? 3 : 0));
+        flowersText.text = formattedFlowerCount + " flowers";
+        flowersPerSecondText.text = "Per second: " + flowersPerSecondTotal.ToString(flowersPerSecondTotal == (int)flowersPerSecondTotal ? "N0" : "N1");
 
-		cookiesPerClickTextTest.text = "per click orig: " + cookiesPerClick + "\nper click total: " + cookiesPerClickTotal + "\nclick mult: " + cookiesPerClickMultiplier + "\naddOn: " + cookiesPerClickAddOn; // (test)
+        flowersPerClickTextTest.text = "per click orig: " + flowersPerClick + "\nper click total: " + flowersPerClickTotal + "\nclick mult: " + flowersPerClickMultiplier + "\naddOn: " + flowersPerClickAddOn; // (test)
 
-		handmadeCookiesString = handmadeCookies.ToString ();
-		cookiesPerClickTotalString = cookiesPerClickTotal.ToString ();
-	}
+        handmadeFlowersString = handmadeFlowers.ToString();
+        flowersPerClickTotalString = flowersPerClickTotal.ToString();
+    }
 
-	string spelledOutNumber(decimal num, int places) {
-		if (num < 1000m)
-			return Decimal.Round(num) + "";
-//		num = Decimal.Round(num / 10m) * 10m;
-		num = Decimal.Round(num * (decimal)Math.Pow(10.0, (double)places)) / (decimal)Math.Pow(10.0, (double)places);
-		string strNum = num + "";
-		int headNumLen = strNum.Length % 3 == 0 ? 3 : strNum.Length % 3;
-		int zerosLen = strNum.Length - headNumLen;
-		float firstPart = Mathf.Round((float)num / Mathf.Pow(10f, (float)zerosLen) * Mathf.Pow(10f, (float)places)) / Mathf.Pow(10f, (float)places);
-		return (firstPart == (int)firstPart ? (int)firstPart : firstPart) + " " + zeroCountsToWords [zerosLen];
-	}
-		
-	public string formatNumber(decimal num, int places) {
-		if (shortenNumbers)
-			return spelledOutNumber(num, places);
-		return num.ToString ("#,##0." + new String('#', places));
-	}
+    string spelledOutNumber(decimal num, int places)
+    {
+        if (num < 1000m)
+            return Decimal.Round(num) + "";
+        //		num = Decimal.Round(num / 10m) * 10m;
+        num = Decimal.Round(num * (decimal)Math.Pow(10.0, (double)places)) / (decimal)Math.Pow(10.0, (double)places);
+        string strNum = num + "";
+        int headNumLen = strNum.Length % 3 == 0 ? 3 : strNum.Length % 3;
+        int zerosLen = strNum.Length - headNumLen;
+        float firstPart = Mathf.Round((float)num / Mathf.Pow(10f, (float)zerosLen) * Mathf.Pow(10f, (float)places)) / Mathf.Pow(10f, (float)places);
+        return (firstPart == (int)firstPart ? (int)firstPart : firstPart) + " " + zeroCountsToWords[zerosLen];
+    }
+
+    public string formatNumber(decimal num, int places)
+    {
+        if (shortenNumbers)
+            return spelledOutNumber(num, places);
+        return num.ToString("#,##0." + new String('#', places));
+    }
 }
